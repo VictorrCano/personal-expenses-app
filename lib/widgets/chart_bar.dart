@@ -41,7 +41,7 @@ class ChartBar extends StatelessWidget {
         ),
       ),
       SizedBox(height: 5),
-      Text(spendingForDay.toString()),
+      FittedBox(child: Text('\$' + spendingForDay.toString())),
     ]);
   }
 }
