@@ -29,8 +29,11 @@ class Chart extends StatelessWidget {
     for (var tx in groupedTransactionValues) {
       sum += double.parse(tx['amount'].toString());
     }
-
-    return sum;
+    if (sum == 0) {
+      return 1.0;
+    } else {
+      return sum;
+    }
   }
 
   @override

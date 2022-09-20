@@ -32,10 +32,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
+    /**
     Transaction('1', 7, 't1', DateTime(2022, 09, 15, 23, 21, 19, 807517),
         'Fri, Sep 15, 2022'),
     Transaction('1', 5, 't1', DateTime(2022, 09, 16, 23, 21, 19, 807517),
         'Fri, Sep 16, 2022'),
+        */
     //Transaction('2', 5, 't2', DateTime(2022, 09, 17, 23, 21, 19, 807517),
     //    'Fri, Sep 17, 2022'),
     //Transaction('3', 5, 't3', DateTime(2022, 09, 18, 23, 21, 19, 807517),
