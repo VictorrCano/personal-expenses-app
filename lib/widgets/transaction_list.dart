@@ -14,7 +14,8 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
+      padding: EdgeInsets.only(top: 10),
+      height: 500,
       child: ListView.builder(
         itemCount: _transactions.length,
         itemBuilder: ((context, index) {
@@ -24,7 +25,7 @@ class TransactionList extends StatelessWidget {
             margin: EdgeInsets.all(10),
             child: Card(
               elevation: 5,
-              color: Colors.purple[100],
+              color: Theme.of(context).backgroundColor, //Colors.purple[100],
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -33,13 +34,15 @@ class TransactionList extends StatelessWidget {
                     margin: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.purple,
+                        color: Theme.of(context).primaryColorDark,
                         width: 2,
                       ),
                     ),
-                    child: Text('\$ ' + _transactions[index].cost.toString(),
+                    child: Text(
+                        '\$ ' + _transactions[index].cost.toStringAsFixed(2),
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.purple)),
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColorDark)),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,15 +70,5 @@ class TransactionList extends StatelessWidget {
         }),
       ),
     );
-  }
-
-  void addTransaction(String costInput, String titleInput) {
-    var uuid = Uuid();
-    _transactions.add(Transaction(
-        uuid.v1(),
-        double.parse(costInput),
-        titleInput,
-        DateTime.now(),
-        DateFormat.yMMMEd().format(DateTime.now())));
   }
 }
