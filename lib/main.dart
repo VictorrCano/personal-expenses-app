@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _addTransaction(double cost, String title) {
+  void _addTransaction(double cost, String title, DateTime dateTime) {
     var uuid = Uuid();
     setState(() {
       _userTransactions.add(
@@ -72,8 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
           uuid.v1(),
           cost,
           title,
-          DateTime.now(),
-          DateFormat.yMMMEd().format(DateTime.now()),
+          dateTime,
+          DateFormat.yMMMEd().format(dateTime),
         ),
       );
     });
@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //print(titleInput);
     //print(costInput);
     return Scaffold(
-      appBar: AppBar(title: Text('Expense Tracking'), actions: [
+      appBar: AppBar(title: Text('Expenses Tracker'), actions: [
         IconButton(
           icon: Icon(Icons.add),
           onPressed: () => _openNewTransactionSheet(context),
