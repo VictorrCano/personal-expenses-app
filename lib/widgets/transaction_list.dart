@@ -29,7 +29,7 @@ class TransactionList extends StatelessWidget {
               elevation: 5,
               color: Theme.of(context).backgroundColor, //Colors.purple[100],
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
                     padding: EdgeInsets.all(10),
@@ -65,7 +65,7 @@ class TransactionList extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(width: 100),
+                  SizedBox(width: 80),
                   IconButton(
                       onPressed: () =>
                           removeTransactionPtr(_transactions[index].id),
