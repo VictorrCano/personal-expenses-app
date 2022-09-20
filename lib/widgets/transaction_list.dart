@@ -9,7 +9,9 @@ import '../models/transcation.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> _transactions;
-  TransactionList(this._transactions, {super.key});
+  final Function removeTransactionPtr;
+
+  TransactionList(this._transactions, this.removeTransactionPtr, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +65,11 @@ class TransactionList extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(width: 100),
+                  IconButton(
+                      onPressed: () =>
+                          removeTransactionPtr(_transactions[index].id),
+                      icon: Icon(Icons.delete)),
                 ],
               ),
             ),
