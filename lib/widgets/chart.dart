@@ -38,25 +38,27 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        elevation: 6,
-        margin: EdgeInsets.all(10),
-        child: Container(
-          padding: EdgeInsets.all(5),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: groupedTransactionValues.reversed
-                .map((spendingDay) => Flexible(
-                      fit: FlexFit.tight,
-                      child: ChartBar(
-                        double.parse(spendingDay['amount'].toString()),
-                        (double.parse(spendingDay['amount'].toString()) /
-                            transactionsSum),
-                        spendingDay['day'].toString(),
-                      ),
-                    ))
-                .toList(),
-          ),
-        ));
+    return Container(
+      child: Card(
+          elevation: 6,
+          margin: EdgeInsets.all(10),
+          child: Container(
+            padding: EdgeInsets.all(5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: groupedTransactionValues.reversed
+                  .map((spendingDay) => Flexible(
+                        fit: FlexFit.tight,
+                        child: ChartBar(
+                          double.parse(spendingDay['amount'].toString()),
+                          (double.parse(spendingDay['amount'].toString()) /
+                              transactionsSum),
+                          spendingDay['day'].toString(),
+                        ),
+                      ))
+                  .toList(),
+            ),
+          )),
+    );
   }
 }

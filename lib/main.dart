@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter/services.dart';
 
 import './models/transcation.dart';
 import './widgets/new_transaction.dart';
@@ -8,6 +9,9 @@ import './widgets/transaction_list.dart';
 import './widgets/chart.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MyApp());
 }
 
@@ -31,29 +35,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _userTransactions = [
-    /**
-    Transaction('1', 7, 't1', DateTime(2022, 09, 15, 23, 21, 19, 807517),
-        'Fri, Sep 15, 2022'),
-    Transaction('1', 5, 't1', DateTime(2022, 09, 16, 23, 21, 19, 807517),
-        'Fri, Sep 16, 2022'),
-        */
-    //Transaction('2', 5, 't2', DateTime(2022, 09, 17, 23, 21, 19, 807517),
-    //    'Fri, Sep 17, 2022'),
-    //Transaction('3', 5, 't3', DateTime(2022, 09, 18, 23, 21, 19, 807517),
-    //    'Fri, Sep 18, 2022'),
-    /**Transaction('4', 5, 't4', DateTime(2022, 09, 19, 23, 21, 19, 807517),
-        'Fri, Sep 19, 2022'),
-    Transaction('5', 5, 't5', DateTime(2022, 09, 20, 23, 21, 19, 807517),
-        'Fri, Sep 20, 2022'),
-    Transaction('6', 5, 't6', DateTime(2022, 09, 21, 23, 21, 19, 807517),
-        'Fri, Sep 21, 2022'),
-    Transaction('7', 5, 't7', DateTime(2022, 09, 22, 23, 21, 19, 807517),
-        'Fri, Sep 22, 2022'),
-    Transaction('8', 5, 't8', DateTime(2022, 09, 22, 23, 21, 20, 807517),
-        'Fri, Sep 22, 2022'),
-      */
-  ];
+  final List<Transaction> _userTransactions = [];
 
   void _openNewTransactionSheet(BuildContext context) {
     showModalBottomSheet(
@@ -87,31 +69,45 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //print(titleInput);
-    //print(costInput);
+    bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    final appBar = AppBar(title: Text('Expenses Tracker'), actions: [
+      IconButton(
+        icon: Icon(Icons.add),
+        onPressed: () => _openNewTransactionSheet(context),
+      ),
+    ]);
+
+    print(MediaQuery.of(context).size.height);
+    print(appBar.preferredSize.height);
+    print(MediaQuery.of(context).padding.top);
+
     return Scaffold(
-      appBar: AppBar(title: Text('Expenses Tracker'), actions: [
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () => _openNewTransactionSheet(context),
-        ),
-      ]),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
-          //mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Card(
-              margin: EdgeInsets.all(20),
-              elevation: 5,
-              color: Theme.of(context).primaryColor,
-              child: Chart(_userTransactions),
+            Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.25,
+              child: Card(
+                margin: EdgeInsets.all(20),
+                elevation: 5,
+                color: Theme.of(context).primaryColor,
+                child: Chart(_userTransactions),
+              ),
             ),
             _userTransactions.isEmpty
                 ? Column(children: [
                     Container(
                         alignment: Alignment.center,
-                        height: 100,
+                        height: (MediaQuery.of(context).size.height -
+                                appBar.preferredSize.height -
+                                MediaQuery.of(context).padding.top) *
+                            0.2,
                         child: const Text(
                           'No expenses added yet',
                           style: TextStyle(
@@ -121,13 +117,23 @@ class _MyHomePageState extends State<MyHomePage> {
                         )),
                     Image.asset(
                       'assets/images/clipart2333307.png',
-                      height: 150,
+                      height: (MediaQuery.of(context).size.height -
+                              appBar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.25,
                     ),
                   ])
-                : TransactionList(_userTransactions, _deleteTransaction),
+                : Container(
+                    height: (MediaQuery.of(context).size.height -
+                            appBar.preferredSize.height -
+                            MediaQuery.of(context).padding.top) *
+                        0.75,
+                    child:
+                        TransactionList(_userTransactions, _deleteTransaction),
+                  ),
           ],
         ),
-      ),
+      ), //singlechildscrollview
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),

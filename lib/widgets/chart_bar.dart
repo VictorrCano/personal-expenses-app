@@ -12,36 +12,51 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Text(label),
-      SizedBox(height: 5),
-      Container(
-        height: 60,
-        width: 10,
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.greenAccent, width: 3.0),
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-            FractionallySizedBox(
-              heightFactor: spendingPecentage,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(10),
+    return LayoutBuilder(
+      builder: (ctx, constraints) {
+        return Column(children: [
+          Container(
+              height: constraints.maxHeight * 0.2,
+              child: FittedBox(child: Text(label))),
+          SizedBox(
+            height: constraints.maxHeight * 0.05,
+          ),
+          Container(
+            height: constraints.maxHeight * 0.5,
+            width: 10,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.greenAccent, width: 3.0),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
-              ),
-            )
-          ],
-        ),
-      ),
-      SizedBox(height: 5),
-      FittedBox(child: Text('\$' + spendingForDay.toString())),
-    ]);
+                FractionallySizedBox(
+                  heightFactor: spendingPecentage,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: constraints.maxHeight * 0.05,
+          ),
+          Container(
+            height: constraints.maxHeight * 0.2,
+            child: FittedBox(
+              child: Text('\$' + spendingForDay.toString()),
+            ),
+          ),
+        ]);
+      },
+    );
   }
 }
